@@ -506,8 +506,17 @@ To standardize the team's tooling and reduce setup friction, the repository incl
 
 JSON
 
-{  
-  "recommendations":  
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "github.copilot",
+    "github.copilot-chat",
+    "ms-python.black-formatter",
+    "charliermarsh.ruff",
+    "aaron-bond.better-comments",
+    "timheuer.awesome-copilot"
+  ]
 }
 
 ### **Section 4.2: Optimized Workspace Settings (.vscode/settings.json)**
