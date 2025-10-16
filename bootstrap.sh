@@ -20,6 +20,17 @@ print_warning() {
     echo -e "\\033[33m[WARNING]\\033[0m $1"
 }
 
+check_docker() {
+    print_info "Checking for Docker..."
+    if ! command -v docker &> /dev/null; then
+        print_warning "Docker not found. Installing..."
+        sudo apt-get update && sudo apt-get install -y docker.io
+        print_success "Docker installed."
+    else
+        print_success "Docker is available."
+    fi
+}
+
 create_directories() {
     print_info "Creating directory structure..."
     mkdir -p .specify/memory .github/instructions .github/prompts .github/chatmodes .github/workflows .vscode src tests
@@ -87,6 +98,7 @@ sync_prompts() {
 main() {
     print_info "Starting AI-Native Repository Bootstrap Process..."
 
+    check_docker
     create_directories
     populate_templates # In a real package, this would copy files, not just touch them.
     setup_python_environment

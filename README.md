@@ -1,8 +1,8 @@
-# **[Project Name]**
+# **Smactory**
 
 ## **1. Project Overview**
 
-[Provide a concise, high-level summary of the project's purpose, its core functionality, and the problem it solves.]
+Smactory is an AI-Native Python project template for structured development, solving inconsistent AI-assisted coding workflows by integrating Spec-Driven Development and AI primitives.
 
 ---
 
@@ -29,9 +29,9 @@ This repository follows a structured, AI-assisted development process. Adherence
 ### **Installation**
 
 1. Clone the repository:
-   git clone [repository-url]
+   git clone https://github.com/leonbreukelman/smactory
 2. Navigate to the project directory:
-   cd [project-name]
+   cd smactory
 3. Run the bootstrap script to set up the environment and AI primitives:
    ./bootstrap.sh
 4. Activate the virtual environment:
@@ -43,11 +43,11 @@ This repository follows a structured, AI-assisted development process. Adherence
 
 ### **Spec-Driven Development**
 
-* /speckit.constitution: Review or update the project's core principles.
-* /speckit.specify "Create a user authentication endpoint": Start a new feature specification.
-* /speckit.plan: Generate a technical plan from the current spec.md.
-* /speckit.tasks: Break down the plan.md into actionable tasks.
-* /speckit.implement: Execute the tasks.md to generate code.
+* ./speckit.sh constitution: Review or update the project's core principles.
+* ./speckit.sh specify "Create a user authentication endpoint": Start a new feature specification.
+* ./speckit.sh plan: Generate a technical plan from the current spec.md.
+* ./speckit.sh tasks: Break down the plan.md into actionable tasks.
+* ./speckit.sh implement: Execute the tasks.md to generate code.
 
 ### **Interactive AI Assistance**
 
@@ -62,7 +62,7 @@ This repository follows a structured, AI-assisted development process. Adherence
 
 1. Create a new branch from main.
 2. Follow the AI-Native Development Lifecycle (Section 2) to implement your feature.
-3. Ensure all local checks pass: pytest, ruff check ., mypy ..
+3. Ensure all local checks pass: pytest, ruff check ., mypy . (with 90% coverage).
 4. Open a pull request against the main branch.
 5. Ensure the CI pipeline passes.
 6. Request a review from the project maintainers.
