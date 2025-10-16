@@ -483,6 +483,8 @@ For example, the bootstrap.sh script (detailed in Part 6\) can include a functio
 
 This creates a powerful, unified system where the project's architectural DNA, as defined by humans in the constitution, directly and automatically shapes the behavior of every AI interaction. This constitutional feedback loop ensures that whether the AI is generating an entire application via SDD or completing a single line of code, it is always operating within the same set of principles, leading to unparalleled consistency and quality.
 
+The python.instructions.md has been expanded with additional guidelines for performance optimization and SDD integration.
+
 ## **Part 4: The Developer's Cockpit \- VS Code Configuration**
 
 A powerful repository architecture must be paired with an equally powerful and consistent local development environment. The VS Code configuration is designed to be the developer's "cockpit," providing all the necessary tools, feedback, and automation to work effectively within the AI-Native paradigm. This is achieved through a curated set of extensions and a meticulously configured workspace settings file.
