@@ -1,0 +1,13 @@
+# Site settings
+title: "AI-Native Development Framework"
+description: "A framework for building and scaling AI-native systems, inspired by awesome-ai-native."
+baseurl: "/smactory" # The name of your repository
+url: "https://leonbreukelman.github.io" # Your GitHub Pages URL
+github_username: leonbreukelman
+
+# Jekyll theme
+theme: jekyll-theme-minimal
+
+# Plugins
+plugins:
+  - jekyll-feed
