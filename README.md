@@ -8,13 +8,34 @@ Smactory is an AI-Native Python project template for structured development, sol
 
 ## **2. The AI-Native Development Lifecycle**
 
-This repository follows a structured, AI-assisted development process. Adherence to this workflow is mandatory for all contributions. The process ensures quality, consistency, and architectural integrity.
+This repository follows a structured, AI-assisted development process with comprehensive journaling. Adherence to this workflow is mandatory for all contributions. The process ensures quality, consistency, and architectural integrity.
 
-1. **Specification (.specify/spec.md)**: All new features must begin with a formal specification using the /speckit.specify command. Focus on the *what* and *why*.
-2. **Planning (.specify/plan.md)**: Create a technical plan with /speckit.plan. This plan will be validated against the project's principles in .specify/memory/constitution.md.
-3. **Tasking (.specify/tasks.md)**: Automatically generate an implementation task list with /speckit.tasks.
-4. **Implementation (/speckit.implement)**: Use the /speckit.implement command for large-scale code generation. For interactive tasks (debugging, refactoring), use the custom prompts and chat modes available in the .github/ directory.
-5. **Verification (CI Pipeline)**: All pull requests must pass the full suite of checks in the quality-assurance.yml workflow, which includes linting, type-checking, unit tests, and AI-assisted code review.
+1. **Specification (.specify/spec.md)**: All new features begin with a formal specification. Run `./speckit.sh specify` to scaffold from the template, then complete it (the what and why).
+2. **Planning (.specify/plan.md)**: Run `./speckit.sh ai-plan` to initialize plan.md and print a Copilot prompt to generate the plan, validated against `.specify/memory/constitution.md`.
+3. **Tasking (.specify/tasks.md)**: Run `./speckit.sh ai-tasks` to initialize tasks.md and print a Copilot prompt to generate a granular, TDD-first task list from the plan.
+4. **Implementation**: Run `./speckit.sh implement` to create a working branch and follow the guided Copilot prompt to apply the tasks incrementally.
+5. **Verification (CI/Local)**: Run `./speckit.sh verify` locally. CI should run linting (ruff), type-checking (mypy --strict), unit tests, and coverage.
+
+### **📔 Journaling System**
+
+Every development session is automatically journaled for transparency and continuity:
+
+- **Daily Journal**: `.specify/journals/YYYY-MM-DD-session.md` - Logs all actions, decisions, and observations
+- **Run Journal**: `.specify/runs/<timestamp>/journal.md` - Implementation-specific progress tracking
+- **Decision Records**: `.specify/memory/decisions/YYYY-MM-DD-title.md` - Architectural decisions (ADRs)
+- **Context**: `.specify/memory/context.md` - Current development state
+
+**Review Development History**:
+```bash
+# Today's journal
+cat .specify/journals/$(date +%Y-%m-%d)-session.md
+
+# Current context
+cat .specify/memory/context.md
+
+# List decisions
+ls .specify/memory/decisions/
+```
 
 ---
 
@@ -32,9 +53,9 @@ This repository follows a structured, AI-assisted development process. Adherence
    git clone https://github.com/leonbreukelman/smactory
 2. Navigate to the project directory:
    cd smactory
-3. Run the bootstrap script to set up the environment and AI primitives:
+3. (Optional) Run the bootstrap script to set up the environment:
    ./bootstrap.sh
-4. Activate the virtual environment:
+4. Activate the virtual environment (WSL):
    source .venv/bin/activate
 
 ---
@@ -43,18 +64,20 @@ This repository follows a structured, AI-assisted development process. Adherence
 
 ### **Spec-Driven Development**
 
-* ./speckit.sh constitution: Review or update the project's core principles.
-* ./speckit.sh specify "Create a user authentication endpoint": Start a new feature specification.
-* ./speckit.sh plan: Generate a technical plan from the current spec.md.
-* ./speckit.sh tasks: Break down the plan.md into actionable tasks.
-* ./speckit.sh implement: Execute the tasks.md to generate code.
+* ./speckit.sh specify      – scaffold `.specify/spec.md` from template.
+* ./speckit.sh ai-plan      – initialize `.specify/plan.md` and print Copilot prompt to draft the plan.
+* ./speckit.sh ai-tasks     – initialize `.specify/tasks.md` and print Copilot prompt to draft the tasks.
+* ./speckit.sh plan         – snapshot finalized `tasks.md` into `.specify/runs/<timestamp>/`.
+* ./speckit.sh implement    – create a branch and guide you to apply tasks with Copilot.
+* ./speckit.sh verify       – run Ruff, mypy (--strict), and pytest with coverage.
 
 ### **Interactive AI Assistance**
 
 * /create-pytest-unit-tests: Generate unit tests for the currently selected function.
 * /generate-docstrings-for-function: Add comprehensive docstrings to the selected function.
+* @journaler: Maintain session journals and decision records.
+* @architect: Create technical plans and make architectural decisions.
 * @qa_engineer: Switch to a chat mode specialized in identifying edge cases and potential bugs.
-* @architect: Switch to a chat mode for high-level design discussions and trade-off analysis.
 * @tester: For testing strategies and bug hunting.
 * @refactor: Suggest code improvements.
 * @documenter: Generate documentation.
