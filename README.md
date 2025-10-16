@@ -14,7 +14,7 @@ This repository follows a structured, AI-assisted development process. Adherence
 2. **Planning (.specify/plan.md)**: Create a technical plan with /speckit.plan. This plan will be validated against the project's principles in .specify/memory/constitution.md.
 3. **Tasking (.specify/tasks.md)**: Automatically generate an implementation task list with /speckit.tasks.
 4. **Implementation (/speckit.implement)**: Use the /speckit.implement command for large-scale code generation. For interactive tasks (debugging, refactoring), use the custom prompts and chat modes available in the .github/ directory.
-5. **Verification (CI Pipeline)**: All pull requests must pass the full suite of checks in the quality-assurance.yml workflow, which includes linting, type-checking, and unit tests.
+5. **Verification (CI Pipeline)**: All pull requests must pass the full suite of checks in the quality-assurance.yml workflow, which includes linting, type-checking, unit tests, and AI-assisted code review.
 
 ---
 
@@ -55,6 +55,14 @@ This repository follows a structured, AI-assisted development process. Adherence
 * /generate-docstrings-for-function: Add comprehensive docstrings to the selected function.
 * @qa_engineer: Switch to a chat mode specialized in identifying edge cases and potential bugs.
 * @architect: Switch to a chat mode for high-level design discussions and trade-off analysis.
+* @tester: For testing strategies and bug hunting.
+* @refactor: Suggest code improvements.
+* @documenter: Generate documentation.
+* /refactor: Refactor selected code.
+* /explain: Explain code.
+* /generate-tests: Create tests.
+* /fix-bug: Propose bug fixes.
+* /doc: Add docs.
 
 ---
 
