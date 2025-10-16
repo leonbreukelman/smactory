@@ -9,7 +9,6 @@ Thumbs.db
 *Zone.Identifier
 
 # IDE files
-.vscode/settings.json
 .idea/
 *.swp
 *.swo
@@ -36,3 +35,13 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.venv/
+*.egg-info/
+dist/
+build/

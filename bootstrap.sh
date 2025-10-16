@@ -20,6 +20,17 @@ print_warning() {
     echo -e "\\033[33m[WARNING]\\033[0m $1"
 }
 
+check_docker() {
+    print_info "Checking for Docker..."
+    if ! command -v docker &> /dev/null; then
+        print_warning "Docker not found. Installing..."
+        sudo apt-get update && sudo apt-get install -y docker.io
+        print_success "Docker installed."
+    else
+        print_success "Docker is available."
+    fi
+}
+
 create_directories() {
     print_info "Creating directory structure..."
     mkdir -p .specify/memory .github/instructions .github/prompts .github/chatmodes .github/workflows .vscode src tests
@@ -27,36 +38,98 @@ create_directories() {
 }
 
 populate_templates() {
-    print_info "Populating template files..."
-    # This function will be expanded to write the actual file contents.
-    # For now, it just creates empty files as placeholders.
-    touch .specify/memory/constitution.md
-    touch .github/instructions/python.instructions.md
-    touch .github/prompts/create-pytest-unit-tests.prompt.md
-    touch .github/chatmodes/qa_engineer.chatmode.md
-    touch .github/workflows/quality-assurance.yml
-    touch .vscode/extensions.json
-    touch .vscode/settings.json
-    touch pyproject.toml
-    touch README.md
-    print_success "Template files created."
+    print_info "Populating template files and configurations..."
+    # ... existing directory creation ...
+
+    # Create pyproject.toml with default content
+    if [ ! -f "pyproject.toml" ]; then
+        cat <<EOF > pyproject.toml
+[project]
+name = "smactory"
+version = "0.1.0"
+description = "AI-Native factory simulation project."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+    "pre-commit",
+]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "N", "D"]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+exclude = ["tests/"]
+EOF
+        print_success "Created pyproject.toml"
+    else
+        print_warning "pyproject.toml already exists."
+    fi
+
+    # Create .gitignore
+    if [ ! -f ".gitignore" ]; then
+        cat <<EOF > .gitignore
+# Python
+__pycache__/
+*.pyc
+.env
+.venv
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+EOF
+        print_success "Created .gitignore"
+    else
+        print_warning ".gitignore already exists."
+    fi
 }
 
-setup_python_environment() {
-    print_info "Setting up Python virtual environment..."
+setup_python_env() {
     if [ -d ".venv" ]; then
         print_warning "Virtual environment '.venv' already exists. Skipping creation."
     else
+        print_info "Creating Python virtual environment..."
         python3 -m venv .venv
-        print_success "Virtual environment created at ./.venv"
+        print_success "Created .venv"
     fi
 
-    print_info "Activating virtual environment and installing dependencies..."
-    source .venv/bin/activate
-    python -m pip install --upgrade pip
-    pip install -e .[dev]
-    deactivate
-    print_success "Dependencies installed. Activate with 'source .venv/bin/activate'."
+    print_info "Installing dependencies..."
+    . .venv/bin/activate
+    pip install -e ".[dev]"
+    print_success "Development dependencies installed."
+
+    print_info "Installing pre-commit hooks..."
+    pre-commit install
+    print_success "Pre-commit hooks installed."
+}
+
+# --- Execution ---
+main() {
+    print_info "Starting AI-Native Repository Bootstrap Process..."
+
+    create_directories
+    populate_templates
+    setup_python_env
+    sync_copilot_config
+
+    print_success "Bootstrap complete. Your AI-Native environment is ready."
+    print_info "Next steps: Run './speckit.sh specify' to start a new feature."
 }
 
 sync_prompts() {
@@ -87,6 +160,7 @@ sync_prompts() {
 main() {
     print_info "Starting AI-Native Repository Bootstrap Process..."
 
+    check_docker
     create_directories
     populate_templates # In a real package, this would copy files, not just touch them.
     setup_python_environment

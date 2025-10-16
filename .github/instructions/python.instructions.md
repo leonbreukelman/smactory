@@ -7,4 +7,6 @@ When generating or modifying Python code in this repository, you MUST adhere to 
 * **Docstrings**: Generate Google-style docstrings for all public modules, classes, and functions. Include Args:, Returns:, and Raises: sections.
 * **TDD Compliance**: When asked to create a new function or feature, first suggest the corresponding pytest unit tests.
 * **Security**: Be vigilant about security vulnerabilities. Sanitize all inputs, especially those that will be used in database queries (to prevent SQL injection) or rendered in HTML (to prevent XSS).
-* **Error Handling**: Do not swallow exceptions. Use specific exception types and provide clear error messages.
+* Error Handling: Do not swallow exceptions. Use specific exception types and provide clear error messages.
+* Performance: Optimize for scalability per constitution.md (e.g., avoid N+1 queries).
+* SDD Integration: Reference spec.md/plan.md in comments.

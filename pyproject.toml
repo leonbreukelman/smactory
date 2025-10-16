@@ -6,12 +6,7 @@ authors = []
 requires-python = ">=3.10"
 license = { text = "MIT" }
 classifiers = []
-
-[project.dependencies]
-# Add your core project dependencies here
-# Example:
-# fastapi = "^0.104.1"
-# pydantic = "^2.5.2"
+dependencies = []
 
 [project.optional-dependencies]
 dev = [
@@ -25,6 +20,9 @@ dev = [
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
 # -------------------------------------------------------------------
 # Tool Configuration
 # -------------------------------------------------------------------
@@ -36,9 +34,11 @@ line-length = 120
 # Assume Python 3.11 compatibility.
 target-version = "py311"
 
-# Enable a broad set of rules by default, then selectively ignore.
+[tool.ruff.lint]
+# Enable a baseline of useful rules.
+# E: pycodestyle errors, F: pyflakes, I: import sorting, B: bugbear
 # See https://docs.astral.sh/ruff/rules/ for a full list.
-select = []
+select = ["E", "F", "I", "B"]
 ignore = []
 
 # Exclude commonly ignored directories.
@@ -85,7 +85,7 @@ allow_untyped_defs = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q --cov=src --cov-report=term-missing"
+addopts = "-ra -q --cov=src --cov-report=term-missing --cov-fail-under=90"
 testpaths = [
     "tests",
 ]
