@@ -23,10 +23,10 @@ When generating or modifying Python code in this repository, adhere to:
    ```bash
    # Check what's happening now
    cat .specify/memory/context.md
-   
+
    # Read today's journal
    cat .specify/journals/$(date +%Y-%m-%d)-session.md
-   
+
    # If in a spec run, read run journal
    cat .specify/runs/<RUN_ID>/journal.md
    ```
@@ -61,8 +61,8 @@ When making **any architectural choice**, create a decision record:
 ```markdown
 # ADR-XXX: <Title>
 
-**Date**: YYYY-MM-DD  
-**Status**: Accepted  
+**Date**: YYYY-MM-DD
+**Status**: Accepted
 **Deciders**: GitHub Copilot + Developer
 
 ## Context
@@ -71,7 +71,7 @@ When making **any architectural choice**, create a decision record:
 ## Options Considered
 
 ### Option 1: <Name>
-**Pros**: 
+**Pros**:
 - <Advantage 1>
 
 **Cons**:
@@ -229,7 +229,7 @@ At end of session, **summarize in journal**:
 ## Session Outcomes
 - **Completed Tasks**: T1, T2, T3
 - **Deferred Tasks**: T4 (reason)
-- **New Issues Found**: 
+- **New Issues Found**:
   - <issue 1>
   - <issue 2>
 - **Quality Metrics**:
