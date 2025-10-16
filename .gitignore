@@ -9,7 +9,6 @@ Thumbs.db
 *Zone.Identifier
 
 # IDE files
-.vscode/settings.json
 .idea/
 *.swp
 *.swo

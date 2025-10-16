@@ -1,5 +1,7 @@
 import pytest
+
 from math_utils import add
+
 
 def test_add_happy_path() -> None:
     assert add(2, 3) == 5

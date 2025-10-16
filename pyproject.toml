@@ -34,9 +34,11 @@ line-length = 120
 # Assume Python 3.11 compatibility.
 target-version = "py311"
 
-# Enable a broad set of rules by default, then selectively ignore.
+[tool.ruff.lint]
+# Enable a baseline of useful rules.
+# E: pycodestyle errors, F: pyflakes, I: import sorting, B: bugbear
 # See https://docs.astral.sh/ruff/rules/ for a full list.
-select = []
+select = ["E", "F", "I", "B"]
 ignore = []
 
 # Exclude commonly ignored directories.

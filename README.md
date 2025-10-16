@@ -14,7 +14,16 @@ This repository follows a structured, AI-assisted development process with compr
 2. **Planning (.specify/plan.md)**: Run `./speckit.sh ai-plan` to initialize plan.md and print a Copilot prompt to generate the plan, validated against `.specify/memory/constitution.md`.
 3. **Tasking (.specify/tasks.md)**: Run `./speckit.sh ai-tasks` to initialize tasks.md and print a Copilot prompt to generate a granular, TDD-first task list from the plan.
 4. **Implementation**: Run `./speckit.sh implement` to create a working branch and follow the guided Copilot prompt to apply the tasks incrementally.
-5. **Verification (CI/Local)**: Run `./speckit.sh verify` locally. CI should run linting (ruff), type-checking (mypy --strict), unit tests, and coverage.
+5. **Verification**: Run `./spe-ckit.sh verify` to run all quality checks (linting, type-checking, tests).
+
+### **Handling Changes and Iteration**
+
+The SDD process is not strictly linear. If you discover a flaw in the plan or tasks during implementation:
+1.  **Pause**: Stop the current implementation work.
+2.  **Document**: Note the issue and your proposed change in the daily journal (`.specify/journals/`).
+3.  **Update**: Modify `.specify/spec.md` or `.specify/plan.md` as needed.
+4.  **Regenerate**: If the plan changed significantly, you may need to re-run `./speckit.sh ai-tasks` to get a new task list.
+5.  **Resume**: Continue implementation using the updated tasks.
 
 ### **📔 Journaling System**
 

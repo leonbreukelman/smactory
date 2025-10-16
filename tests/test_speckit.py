@@ -3,13 +3,14 @@ Tests for spec kit journaling functionality.
 
 Validates that journals are created, updated, and formatted correctly.
 """
+import shutil
+import subprocess
+import tempfile
 from datetime import datetime
 from pathlib import Path
 from typing import Generator
+
 import pytest
-import subprocess
-import tempfile
-import shutil
 
 
 @pytest.fixture
@@ -156,6 +157,7 @@ def test_verify_logs_results(temp_repo: Path) -> None:
         capture_output=True,
         text=True
     )
+    assert result.returncode == 0
 
     # Check journal updated
     today = datetime.now().strftime("%Y-%m-%d")
