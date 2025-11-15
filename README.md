@@ -107,3 +107,28 @@ ls .specify/memory/decisions/
 5. Ensure the CI pipeline passes.
 6. Request a review from the project maintainers.
 
+## **6. Developing in a Dev Container**
+
+- **Prerequisites:** Install Docker, VS Code, and the `Dev Containers` extension.
+- **Open in container:** In VS Code, press Ctrl+Shift+P and run `Dev Containers: Rebuild and Reopen in Container`.
+- **What happens:** The container uses `mcr.microsoft.com/devcontainers/universal:2-linux` and runs `.devcontainer/postCreateCommand.sh` to install tools (uv, Copilot CLI, Spec-kit) and fetch `AGENTS.md`.
+
+### Verify setup inside the container
+
+```bash
+node --version
+python --version
+uv --version
+specify check --ignore-agent-tools
+```
+
+### Rerun the post-create script manually
+
+```bash
+bash -lc '.devcontainer/postCreateCommand.sh'
+```
+
+### Troubleshooting
+
+- **npm not found:** The script runs under `bash -lc` via `postCreateCommand`. If re-running manually, use the exact command above so PATH/init scripts load correctly.
+- **uv not found:** Ensure `$HOME/.local/bin` is on PATH. The script exports it for the session.
