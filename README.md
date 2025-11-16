@@ -54,6 +54,7 @@ To get started, clone the repo and use VS Code with Dev Containers for an autono
      node --version    # Should show 20.x
      specify check     # Validates Spec-kit
      python -c "import cognee; print(cognee.__version__)"  # Confirms Cognee
+     copilot --version # Confirms GitHub Copilot CLI
      ```
    - Setup complete message: "Dev environment setup complete. AGENTS.md is available in the root directory."
 
