@@ -41,12 +41,12 @@ cat << 'EOF' > AGENTS.md
 This file provides context and instructions for AI coding agents working on this project. It complements the human-focused README.md.
 
 ## Project Overview
-This repository sets up a development environment for AI agent projects using a dev container with Python 3.12, Node.js 20, Spec-kit CLI for specification management, and Cognee for AI memory handling. The environment supports prototyping AI agents with persistent memory, state management, and declarative workflows.
+This repository sets up a development environment for AI agent projects using a dev container with Python 3.12, Node.js 20, Spec-kit CLI for specification management, Cognee for AI memory handling, and GitHub Copilot CLI for AI-assisted command line operations. The environment supports prototyping AI agents with persistent memory, state management, and declarative workflows.
 
 ## Setup Commands
 - Initialize the dev container: Use VS Code with the Dev Containers extension to open the repository.
-- Post-create setup: Run `.devcontainer/postCreateCommand.sh` to install uv, Spec-kit, Cognee, and other dependencies.
-- Verify environment: Execute `specify check`, `node --version`, `python --version`, and `python -c "import cognee; print(cognee.__version__)"`.
+- Post-create setup: Run `.devcontainer/postCreateCommand.sh` to install uv, Spec-kit, Cognee, GitHub Copilot CLI, and other dependencies.
+- Verify environment: Execute `specify check`, `node --version`, `python --version`, `python -c "import cognee; print(cognee.__version__)"`, and `copilot --version`.
 
 ## Code Style Guidelines
 - **Python**: Follow PEP 8 standards. Use single quotes, 4-space indentation, and type hints. Prefer functional patterns where applicable.
@@ -91,9 +91,13 @@ npm init -y
 # Install global NPM packages or initialize if needed (expand as per project)
 npm install -g npm@latest
 
+# Install GitHub Copilot CLI (official: https://docs.github.com/copilot/how-tos/set-up/install-copilot-cli)
+npm install -g @github/copilot
+
 # Verify setup
 specify check
 node --version
 python --version
 python -c "import cognee; print('cognee version:', cognee.__version__)"  # Verify Cognee installation
+copilot --version  # Verify GitHub Copilot CLI installation
 echo "Dev environment setup complete. AGENTS.md is available in the root directory."
