@@ -1,12 +1,14 @@
 {
-  "name": "Custom Stack Dev Environment",
-  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+  "name": "Smactory v3 – AI-Native Organism",
+  "dockerComposeFile": "docker-compose.dev.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
     },
     "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
+      "version": "22"
     }
   },
   "customizations": {
@@ -14,19 +16,19 @@
       "extensions": [
         "github.copilot",
         "ms-python.python",
-        "ms-vscode.vscode-typescript-tslint",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "github.copilot-chat"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash",
-        "github.copilot.enable": {
-          "*": true,
-          "plaintext": true,
-          "markdown": true,
-          "scminput": false
-        }
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
       }
     }
   },
-  "postCreateCommand": "/bin/bash .devcontainer/postCreateCommand.sh"
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "remoteUser": "codespace",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb"
+  }
 }
