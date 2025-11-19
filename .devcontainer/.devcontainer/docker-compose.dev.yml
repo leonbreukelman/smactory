@@ -1,0 +1,28 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/universal:2-linux
+    volumes:
+      - type: bind
+        source: ${localWorkspaceFolder}/..
+        target: /workspaces
+    command: sleep infinity
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: cognee_user
+      POSTGRES_PASSWORD: ${COGNEE_DB_PASSWORD:-change_me_now}
+      POSTGRES_DB: cognee_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cognee_user -d cognee_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:
