@@ -2,27 +2,35 @@ services:
   app:
     image: mcr.microsoft.com/devcontainers/universal:2-linux
     volumes:
-      - type: bind
-        source: ${localWorkspaceFolder}/..
-        target: /workspaces
+      - ..:/workspaces/${localWorkspaceFolderBasename}:cached
     command: sleep infinity
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - smactory-net
+
   db:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16          # ← official, current, working image (confirmed today)
     restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: cognee_user
-      POSTGRES_PASSWORD: ${COGNEE_DB_PASSWORD:-change_me_now}
+      POSTGRES_PASSWORD: ${COGNEE_DB_PASSWORD}
       POSTGRES_DB: cognee_db
+    env_file:
+        - ../.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U cognee_user -d cognee_db"]
       interval: 5s
       timeout: 5s
       retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - smactory-net
 
 volumes:
   postgres-data:
+
+networks:
+  smactory-net:
