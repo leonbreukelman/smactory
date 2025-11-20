@@ -61,6 +61,17 @@ EOF
 # 8. Node init
 npm init -y > /dev/null
 
+# ─────────────────────────────────────────────────────────────
+# PostgreSQL client (for psql command)
+echo "Installing PostgreSQL client..."
+sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-client
+
+# Auto-inject temporary DATABASE_URL for cognee (setup_secrets.py will override with real secrets later)
+if ! grep -q "COGNEE_DATABASE_URL" .env 2>/dev/null; then
+  echo "Injecting temporary Cognee DATABASE_URL..."
+  echo "COGNEE_DATABASE_URL=postgresql://cognee_user:smactory_temp_2025_change_me@db:5432/cognee_db" >> .env
+fi
+
 # 9. Verification
 echo "✅ Verification:"
 python --version
@@ -69,6 +80,15 @@ specify --version 2>/dev/null || echo "specify ok"
 goose --version
 copilot --version
 python -c "import cognee; print('cognee', cognee.__version__)"
+
+# ── PostgreSQL client + temp DATABASE_URL for cognee ─────────────────────
+echo "Installing PostgreSQL client..."
+sudo apt-get update && sudo apt-get install -y postgresql-client
+
+if ! grep -q "COGNEE_DATABASE_URL" .env 2>/dev/null; then
+  echo "Injecting temporary Cognee DATABASE_URL..."
+  echo "COGNEE_DATABASE_URL=postgresql://cognee_user:smactory_temp_2025_change_me@db:5432/cognee_db" >> .env
+fi
 
 echo "🧬 Smactory v3 organism successfully bootstrapped."
 # Load .env if present (safe, no validation issues)
