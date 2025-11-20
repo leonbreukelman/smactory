@@ -1,109 +1,179 @@
-# Smactory: AI-First Autonomous Management Repository
+# Smactory 🚀
 
-[![GitHub license](https://img.shields.io/github/license/leonbreukelman/smactory)](https://github.com/leonbreukelman/smactory/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/leonbreukelman/smactory)](https://github.com/leonbreukelman/smactory/issues)
-[![GitHub stars](https://img.shields.io/github/stars/leonbreukelman/smactory)](https://github.com/leonbreukelman/smactory/stargazers)
+**A Fully AI-Autonomous Repository for Prototyping & Managing Production-Grade AI Agents**
 
-## Overview
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Dev Container](https://img.shields.io/badge/Dev%20Container-Ready-brightgreen)](https://code.visualstudio.com/docs/devcontainers/containers)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
+[![Node.js 22](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 
-Smactory is an AI-first repository engineered for autonomous management and prototyping of AI agents. It harnesses official AI tools and integrations to enable self-setup, self-evolution, and operation by AI agents, with human oversight for alignment and refinement. The core focus is on establishing a development environment that supports persistent memory, state management, declarative workflows, and reasoning loops using tools like Spec-kit, Cognee, Goose, and GitHub Copilot CLI. Agents can self-configure secrets, update documentation, and execute tasks via reasoning-react patterns, pushing toward full autonomy.
+Smactory is built to be **operated entirely by AI agents**.
 
-This repo is bootstrapped autonomously by AI agents, following a single core setup script (see `.devcontainer/postCreateCommand.sh` and `AGENTS.md`). Configurations prioritize reuse of existing, tested code over new generation, with installations referencing official sources for verifiability and security. Secrets (e.g., API keys) are managed post-bootstrap via `setup_secrets.py` for agentic handling.
+Humans only provide high-level direction and final alignment review.
 
-**Key Stack**:
-- **Languages/Runtimes**: Python 3.12, Node.js 22
-- **Package Managers**: uv (for Python), NPM (for Node)
-- **AI Tools**: Spec-kit CLI (for declarative specifications), Cognee (for AI memory handling with PostgreSQL support), Goose (for reasoning loops), GitHub Copilot, Copilot CLI
-- **Persistence**: PostgreSQL (auto-configured with secret-injected credentials)
-- **Environment**: Dev Container based on Microsoft's universal image
-- **Other**: MCP servers (for managed compute, e.g., Microsoft Cloud Platform integrations), setup_secrets.py for autonomous secret management
+The repo installs its own tools, configures secrets, starts databases, writes and updates its own documentation, stores knowledge in Cognee, reasons with Goose, acts with Copilot CLI, and evolves itself — all from **official, verifiable sources only**.
 
-The setup ensures reliable, agent-performable tasks to get the repo operational, with documentation self-updated to reflect exact commands, official references, and AI-driven evolutions.
+This is what happens when you combine Dev Containers + uv + Spec-kit + Cognee + Goose + Copilot CLI correctly: the repository becomes **alive**.
 
-## Quick Start
+## Quick Start (≈ 8–10 min total)
 
-To get started, clone the repo and use VS Code with Dev Containers for an autonomous setup. Agents can self-execute these steps via reasoning.
+```bash
+git clone https://github.com/leonbreukelman/smactory.git
+cd smactory
+code .        # Open in VS Code
+```
 
-1. **Prerequisites**:
-   - Git installed
-   - Visual Studio Code with the Dev Containers extension (official: [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers))
-   - Docker (for running the container)
-   - GitHub Secrets configured (e.g., LLM_API_KEY for Cognee, XAI_API_KEY for Goose—see Security section)
+→ When prompted → **"Reopen in Container"**
 
-2. **Clone the Repository**:
-   ```
-   git clone https://github.com/leonbreukelman/smactory.git
-   cd smactory
-   ```
+The Dev Container will automatically:
 
-3. **Open in VS Code**:
-   - Launch VS Code: `code .`
-   - When prompted, select "Reopen in Container" to build and start the dev environment.
+1. Install Python 3.12, uv, Node.js 22, PostgreSQL, Playwright, etc.
+2. Install Spec-kit, Goose, Cognee, Copilot CLI from their official sources
+3. Start PostgreSQL with persistent volume
+4. Create venv and install all Python dependencies
 
-4. **Post-Create Setup**:
-   - The container automatically runs `.devcontainer/postCreateCommand.sh`, handling all installations autonomously (e.g., uv, Spec-kit, Cognee with PostgreSQL, Goose, Copilot CLI).
-   - This script searches official sources for latest instructions (e.g., via web searches or MCP servers) and updates documentation with exact commands and references.
-   - Example installs (as of current setup; always verify latest via official docs):
-     - uv: Installed from [Astral's official installer](https://astral.sh/uv) with `curl -LsSf https://astral.sh/uv/install.sh | sh`
-     - Spec-kit CLI: From [GitHub's spec-kit repo](https://github.com/github/spec-kit) via `uv tool install specify-cli --from git+https://github.com/github/spec-kit.git`
-     - Cognee: From PyPI with `uv pip install "cognee[postgres]"`, including dependencies like Playwright (official: [Playwright docs](https://playwright.dev/python/docs/intro))
-     - Goose: From [Block's Goose repo](https://github.com/block/goose) via curl installer (skipping auto-configure)
-     - PostgreSQL: Apt-installed with default temp creds; update via `setup_secrets.py`
+### Critical Next Steps (do these exactly in this order)
 
-5. **Post-Bootstrap Configuration**:
-   - Run `uv run python setup_secrets.py` to configure/set secrets (e.g., LLM_API_KEY, COGNEE_DB_PASSWORD, XAI_API_KEY). Agents can self-execute this for autonomy.
-   - Rebuild container to inject secrets.
+#### 1. Initialize Spec-Kit
 
-6. **Verify Setup**:
-   - In the VS Code terminal (after `source .venv/bin/activate`):
-     ```
-     specify check     # Validates Spec-kit
-     node --version    # Should show 22.x
-     python --version  # Should show 3.12.x
-     python -c "import cognee; print(cognee.__version__)"  # Confirms Cognee
-     goose info        # Confirms Goose
-     copilot --version # Confirms GitHub Copilot CLI
-     PGPASSWORD=$COGNEE_DB_PASSWORD psql -h localhost -U cognee_user -d cognee_db -c "\conninfo"  # Confirms PostgreSQL
-     ```
-   - Setup complete message: "Dev environment setup complete. AGENTS.md is available in the root directory."
+```bash
+specify init --here --ai copilot
+```
 
-## Usage
+This creates `.specify/` with templates and memory directory. Copilot Chat will now recognize all `/speckit.*` slash commands.
 
-- **Prototyping AI Agents**: Use Python scripts to import Cognee for memory operations (e.g., async add/cognify/search). Reuse examples from official Cognee docs ([cognee.ai](https://cognee.ai/docs)). Integrate Goose for reasoning via subprocess.
-- **Declarative Workflows**: Run Spec-kit commands like `specify <command>` for specification management. Use slash commands (e.g., /spec-kit.constitution) in Copilot for project guidelines.
-- **Extending the Stack**: For new tools, AI agents must first investigate official sources (e.g., browse official docs or MCP servers), use the exact command, and update `AGENTS.md` or this README with references. Always reuse existing code.
-- **Running Tasks**:
-  - Install dependencies: `uv sync` (Python), `npm install` (Node)
-  - Launch Cognee UI (optional): `cognee-cli -ui` (requires LLM_API_KEY)
-  - Example agent script: Create `agent.py` and run `uv run python agent.py --task "Your task"`. See AGENTS.md for integration.
-  - Secret Management: Run `uv run python setup_secrets.py` for autonomous config.
+#### 2. Create the Project Constitution (one-time, defines agent law forever)
 
-For AI agent-specific instructions, refer to [AGENTS.md](AGENTS.md). This file provides steering for autonomous operations, including self-updates.
+**Best & most reliable method (avoids any copy-paste formatting issues):**
 
-## Architecture
+1. Create a new file in the repository root called **`constitution_prompt.md`**
+2. Paste **exactly** this content into it:
 
-- **Dev Container**: Based on `mcr.microsoft.com/devcontainers/universal:2-linux` (official: [Microsoft Dev Containers](https://github.com/microsoft/vscode-dev-containers)).
-- **Patterns**: Agentic workflows with tools, memory retrieval, and state persistence. Modular, async design for scalability; self-configure via setup_secrets.py.
-- **Integrations**: GitHub Copilot for code assistance, Copilot CLI for CLI tasks (official: [GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)). Goose for reasoning (official: [Block Goose](https://github.com/block/goose)).
-- **Persistence/Security**: PostgreSQL with secret-injected creds; Cognee handles non-sensitive data. Secrets via GitHub for LLM_API_KEY, etc.
+```markdown
+Create the definitive constitution for Smactory — the world's first fully AI-autonomous agent factory.
 
-## Contributing
+This repository must be capable of complete self-maintenance and self-evolution by AI agents with only high-level human alignment review.
 
-Contributions are welcome via pull requests. Follow these guidelines to maintain AI-first autonomy:
+Core imperatives that are absolute law (these MUST be enforced at all times by every agent):
 
-- **PR Format**: `[component] <Descriptive Title>` (e.g., `[cognee] Add memory example`)
-- **Before Committing**: Run linters/tests: `uv run black .`, `npm run lint`, `uv run pytest`, `npm test`
-- **Description**: Include changes, rationale, and tested AI interactions/memory updates.
-- **Issue Templates**: Use GitHub's issue templates for bugs/features.
-- **Wiki**: For extended guides, contribute to the [GitHub Wiki](https://github.com/leonbreukelman/smactory/wiki).
+1. **Autonomy & Self-Maintenance** — Agents must install, configure, document, test, improve, and evolve the repository without human intervention whenever possible.
 
-All changes should be agent-preparable where possible, reusing code and referencing officials.
+2. **Source-of-Truth Only** — Every command, installation, or configuration change MUST be taken directly from the official documentation of the tool and cited with the exact URL. Hallucinated commands are forbidden.
+
+3. **Documentation Excellence** — After ANY change (even tiny), immediately update README.md, AGENTS.md, and any relevant files with the precise commands used, their exact output, the date, and the official source URL. Documentation is never allowed to be stale.
+
+4. **Security First** — Secrets are sacred. Never log, print, commit, or expose secrets. Use only .env + setup_secrets.py. If a secret is accidentally exposed, immediately revoke it and notify the human.
+
+5. **Reliability & Quality** — All code changes must pass `uv run black . && uv run ruff check .`, have tests, and be verified working before PR merge. Zero tolerance for broken builds.
+
+6. **Memory Persistence** — All important knowledge, learnings, decisions, commands, and sources must be stored in Cognee graph + vector memory AND in .specify/memory/ for future sessions.
+
+7. **Reasoning Superiority** — Use Goose for any complex or long-horizon reasoning. Never use weak models for important decisions.
+
+8. **Tool Mastery Order** — Prefer official CLIs in this strict precedence: Copilot CLI → Goose → uv → specify → cognee → python subprocess only as last resort.
+
+9. **Self-Evolution** — At least once per day or after major work, scan the entire repository for improvements, create feature branches, open PRs with proper titles/descriptions, and request human review only for final merge.
+
+10. **Truthfulness & Alignment** — Never hallucinate commands, facts, or sources. If uncertain, research official docs first. Always act in the best interest of creating powerful, safe, production-grade autonomous agents. Human alignment decisions are supreme.
+
+Make this constitution extremely strict, comprehensive, written in clear, enforceable language that the agent will treat as supreme law.
+
+Use markdown formatting, sections, numbered lists, bold for emphasis, and make it visually clean. This file will be saved as .specify/memory/constitution.md and it is the highest law of this repository — higher than any other file.
+```
+
+3. Save the file (commit after constitution is generated)
+
+4. Open **Copilot Chat** → type exactly:
+
+```
+/speckit.constitution @constitution_prompt.md
+```
+
+→ The agent will read the file raw (perfect formatting) and create `.specify/memory/constitution.md`
+
+5. Review → commit the generated constitution immediately.
+
+This constitution is now the **supreme law** of the repository. Every future `/speckit` command automatically respects it.
+
+#### 3. Inject Secrets (Groq, OpenAI, Anthropic, XAI, GitHub token, etc.)
+
+```bash
+uv run python setup_secrets.py
+```
+
+Follow prompts or let an agent do it.  
+Rebuild container once afterward (Ctrl+Shift+P → "Dev Containers: Rebuild Container") so secrets are injected.
+
+#### 4. Verify Everything is Alive
+
+```bash
+specify check              # Spec-kit ready
+goose info                 # Goose ready  
+python -c "import cognee; print('Cognee', cognee.__version__)"
+copilot --version          # Copilot CLI ready
+
+# PostgreSQL (uses the temp bootstrap password)
+PGPASSWORD=smactory_temp_2025_change_me psql -h db -U cognee_user -d cognee_db -c "\conninfo"
+# You should see: You are connected to database "cognee_db" as user "cognee_user" via socket in "/var/run/postgresql" ...
+```
+
+You now have a fully autonomous, self-documenting, self-improving AI agent factory.
+
+## Running Your First Autonomous Agent
+
+Just let Copilot do everything:
+
+```
+copilot run "Using the project constitution, introduce yourself in AGENTS.md, summarize your capabilities, and propose three concrete improvements to the repository right now"
+```
+
+Or run the example:
+
+```bash
+uv run python -m examples.simple_agent --task "You are now the principal agent of Smactory. Introduce yourself in AGENTS.md and propose three immediate improvements."
+```
+
+The real power is the loop: **Constitution → Specification → Plan → Tasks → Implement → Document → Repeat**
+
+## Recommended Ongoing Workflow (AI-First)
+
+1. Open Copilot Chat → describe desired outcome in natural language
+2. Agent uses `/speckit.specify` → `/speckit.plan` → `/speckit.tasks` → `/speckit.implement`
+3. Agent updates documentation with exact sourced commands
+4. Agent opens PR
+5. Human only reviews & merges (alignment check)
+
+## Core Stack (Installed & Verified Autonomously)
+
+| Component         | Purpose                                    | Official Source                                      |
+|-------------------|--------------------------------------------|------------------------------------------------------|
+| Spec-kit CLI      | Constitution + spec-driven development     | https://github.com/github/spec-kit                   |
+| Goose (Block)     | Best-in-class reasoning engine             | https://block.github.io/goose                        |
+| Cognee            | Persistent graph + vector memory           | https://cognee.ai                                            |
+| GitHub Copilot CLI| Terminal actions & agentic commands        | https://docs.github.com/en/copilot/github-copilot-in-the-cli |
+| uv (Astral)       | 50–100× faster Python packaging            | https://astral.sh/uv                                         |
+| PostgreSQL        | Persistent storage for Cognee              | postgresql.org                                               |
+
+Every tool is installed from its official source. The constitution enforces this. No exceptions.
+
+## Contributing = Letting Agents Contribute
+
+The only valid way to contribute:
+
+1. Let an agent propose & implement the change following the constitution
+2. Agent opens PR with title format `[agent-autonomy]`, `[memory]`, `[tooling]`, etc.
+3. PR description must contain: “Verified with agent · Constitution v1 applied”
+4. Human merges
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT © Leon Breukelman
 
-## Acknowledgments
+---
 
-- Built with official tools from GitHub, Microsoft, Astral, Block, and others.
-- Inspired by AI-first development principles for autonomous repos.
+**Smactory is the endgame.**
+
+A repository that no longer needs humans to write code — only to dream.
+
+Star if you're ready for agents to take over (safely).  
+Fork if you're going to let them run wild.
