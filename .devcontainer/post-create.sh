@@ -17,27 +17,8 @@ uv pip install "cognee[postgres]" python-dotenv
 uv pip install protego playwright
 playwright install --with-deps chromium firefox webkit
 
-# 4. Goose – non-interactive + Grok-4
-if ! command -v goose &> /dev/null; then
-  echo "Installing Goose CLI (non-interactive)..."
-  curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | CONFIGURE=0 bash
-fi
-export PATH="$HOME/.local/bin:$PATH"
-
-echo 'export GOOSE_PROVIDER=xai' >> ~/.bashrc
-echo 'export GOOSE_MODEL=grok-4-0709' >> ~/.bashrc
-echo 'export GOOSE_DISABLE_KEYRING=1' >> ~/.bashrc
-source ~/.bashrc
-
-mkdir -p ~/.config/goose
-cat << 'EOF' > ~/.config/goose/config.yaml
-provider: xai
-model: grok-4-0709
-keyring: false
-extensions:
-  developer:
-    enabled: true
-EOF
+# 4. Install official xAI SDK (REST, OpenAI-compatible, no keyring cancer)
+uv pip install xai-sdk
 
 # 5. GitHub Copilot CLI
 npm install -g @github/copilot
