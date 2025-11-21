@@ -14,16 +14,18 @@ services:
     image: pgvector/pgvector:pg16          # ← official, current, working image (confirmed today)
     restart: unless-stopped
     environment:
-      POSTGRES_USER: cognee_user
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: smactory_temp_2025_change_me
       POSTGRES_DB: cognee_db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cognee_user -d cognee_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cognee_db"]
       interval: 5s
       timeout: 5s
+      start_period: 40s
       retries: 10
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - init-db.sql:/docker-entrypoint-initdb.d/00-cognee-user.sql:ro
     networks:
       - smactory-net
 
