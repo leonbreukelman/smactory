@@ -42,7 +42,7 @@ EOF
 # 5. GitHub Copilot CLI
 npm install -g @github/copilot
 
-# 6. Patch Cognee
+# 6. Patch Cognee (raw string fix)
 sed -i '95s/html_template = """/html_template = r"""/' .venv/lib/python*/site-packages/cognee/modules/visualization/cognee_network_visualization.py 2>/dev/null || true
 
 # 7. pyproject.toml
@@ -61,18 +61,35 @@ EOF
 # 8. Node init
 npm init -y > /dev/null
 
-# ─────────────────────────────────────────────────────────────
-# PostgreSQL client (for psql command)
+# 9. PostgreSQL client
 echo "Installing PostgreSQL client..."
 sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-client
 
-# Auto-inject temporary DATABASE_URL for cognee (setup_secrets.py will override with real secrets later)
-if ! grep -q "COGNEE_DATABASE_URL" .env 2>/dev/null; then
-  echo "Injecting temporary Cognee DATABASE_URL..."
-  echo "COGNEE_DATABASE_URL=postgresql://cognee_user:smactory_temp_2025_change_me@db:5432/cognee_db" >> .env
+# ── CRITICAL: Guarantee .env exists with temp credentials that match the hardcoded DB password ──
+if [ ! -f .env ]; then
+  echo "🗝️ Creating initial .env with temporary PostgreSQL credentials..."
+  cat << 'EOF' > .env
+COGNEE_DB_PASSWORD=smactory_temp_2025_change_me
+COGNEE_DATABASE_URL=postgresql://cognee_user:smactory_temp_2025_change_me@db:5432/cognee_db
+
+# API keys - setup_secrets.py will prompt for real ones and rotate the DB password
+XAI_API_KEY=replace_with_real_key
+GROQ_API_KEY=
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+GITHUB_TOKEN=
+EOF
+  echo "✅ .env created with temporary credentials"
+else
+  echo ".env already exists – leaving untouched"
 fi
 
-# 9. Verification
+# Load .env into current session
+set -a
+source .env 2>/dev/null || true
+set +a
+
+# 10. Verification
 echo "✅ Verification:"
 python --version
 node --version
@@ -81,20 +98,4 @@ goose --version
 copilot --version
 python -c "import cognee; print('cognee', cognee.__version__)"
 
-# ── PostgreSQL client + temp DATABASE_URL for cognee ─────────────────────
-echo "Installing PostgreSQL client..."
-sudo apt-get update && sudo apt-get install -y postgresql-client
-
-if ! grep -q "COGNEE_DATABASE_URL" .env 2>/dev/null; then
-  echo "Injecting temporary Cognee DATABASE_URL..."
-  echo "COGNEE_DATABASE_URL=postgresql://cognee_user:smactory_temp_2025_change_me@db:5432/cognee_db" >> .env
-fi
-
-echo "🧬 Smactory v3 organism successfully bootstrapped."
-# Load .env if present (safe, no validation issues)
-if [ -f .env ]; then
-  echo "Loading .env variables into environment..."
-  set -a
-  source .env
-  set +a
-fi
+echo "🧬 Smactory v3 organism successfully bootstrapped – ready for agent takeover."
