@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: cognee_user
-      POSTGRES_PASSWORD: ${COGNEE_DB_PASSWORD}
+      POSTGRES_PASSWORD: smactory_temp_2025_change_me
       POSTGRES_DB: cognee_db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U cognee_user -d cognee_db"]
