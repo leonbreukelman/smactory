@@ -75,7 +75,6 @@ echo "✅ Verification:"
 python --version
 node --version
 specify --version 2>/dev/null || echo "specify ok"
-goose --version
 copilot --version
 python -c "import cognee; print('cognee', cognee.__version__)"
 
