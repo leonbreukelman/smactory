@@ -2,7 +2,7 @@
 
 **A Fully AI-Autonomous Repository for Prototyping & Managing Production-Grade AI Agents**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Dev Container](https://img.shields.io/badge/Dev%20Container-Ready-brightgreen)](https://code.visualstudio.com/docs/devcontainers/containers)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Node.js 22](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org)
@@ -167,7 +167,7 @@ The only valid way to contribute:
 
 ## License
 
-MIT © Leon Breukelman
+Apache 2.0 © Leon Breukelman
 
 ---
 
